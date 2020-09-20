@@ -82,6 +82,7 @@ class Commander{
 
         })
     }
+
     sendLeft(distance=20) {
         return new Promisse((res, rej)=>{
             this.socket.send(`left ${distance}`, 0, `left ${distance}`.length, this.port, this.host, (err)=>{
@@ -94,7 +95,34 @@ class Commander{
 
         })
     }
-    sendFlip(distance=20) {
+
+    sendCw(distance=20) {
+        return new Promisse((res, rej)=>{
+            this.socket.send(`cw ${distance}`, 0, `cw ${distance}`.length, this.port, this.host, (err)=>{
+                if(err){
+                  return rej(err)
+                }else {
+                    return res()
+                }
+            } )
+
+        })
+    }
+
+    sendCcw(distance=20) {
+        return new Promisse((res, rej)=>{
+            this.socket.send(`ccw ${distance}`, 0, `ccw ${distance}`.length, this.port, this.host, (err)=>{
+                if(err){
+                  return rej(err)
+                }else {
+                    return res()
+                }
+            } )
+
+        })
+    }
+//b para traz; f para frente; l left(esquerda) ; r right(direita)
+    sendFlip() {
         return new Promisse((res, rej)=>{
             this.socket.send(`flip b`, 0, `flip b`.length, this.port, this.host, (err)=>{
                 if(err){
@@ -106,6 +134,7 @@ class Commander{
 
         })
     }
+
     getBattery(distance=20) {
         return new Promisse((res, rej)=>{
             this.socket.send(`battery?`, 0, `battery/`.length, this.port, this.host, (err)=>{

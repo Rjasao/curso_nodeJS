@@ -3,7 +3,7 @@ const {creatSocket, Socket} = require('dgram');//portas udp
 const CommandParser = require('./CommandParser');
 const Commander = require('./Commander');
 
-cons rl = readline.createInterface({
+const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 
@@ -15,7 +15,7 @@ const TELLO_HOST = '192.168.10.1';
 const getSocket = ()=>{
     const socket = creatSocket('udp4');
     socket.bind(TELLO_CMD_PORT);
-    return socket
+    return socket;
 
 }
 
@@ -23,7 +23,7 @@ const getSocket = ()=>{
 (async function start(){
     const socket = getSocket();
     const cmder = new Commander(socket, TELLO_HOST, TELLO_CMD_PORT);
-    await cmder. sendInitCommand();
+    await cmder.sendInitCommand();
     const cmder = new CommandParser({
         onTakeoff: async () => {await cmder.sendTakeOff()},
         onLand: async () => {await cmder.sendLand()},
@@ -31,12 +31,10 @@ const getSocket = ()=>{
         onBack: async (dist) => {await cmder.sendBack(dist)},
         onRight: async (dist) => {await cmder.sendRight(dist)},
         onLeft: async (dist) => {await cmder.sendLeft(dist)},
-
         onCw: async (dist) => {await cmder.sendCw(dist)},
         onCcw: async (dist) => {await cmder.sendCcw(dist)},
-
         onFlip: async () => {await cmder.sendFlip()},
-        onBattery: async () => {await cmder.sendBattery()},
+        onBattery: async () => {await cmder.sendBattery()}
     })
     console.log(`iniciando!`);
     socket.on('messege', (msg)=>{
