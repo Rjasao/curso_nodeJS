@@ -9,16 +9,14 @@ const rl = readline.createInterface({
 
 })
 
-const TELLO_CMD_PORT = 8889;
-const TELLO_HOST = '192.168.10.1';
+const TELLO_CMD_PORT = 8889; //channel=1 frequency=2412 udp.dstport == 7877
+const TELLO_HOST = '192.168.10.1'; //192.168.42.1   192.168.42.2  192.168.42.6
 
 const getSocket = ()=>{
     const socket = creatSocket('udp4');
     socket.bind(TELLO_CMD_PORT);
     return socket;
-
 }
-
 
 (async function start(){
     const socket = getSocket();
@@ -40,6 +38,7 @@ const getSocket = ()=>{
     socket.on('messege', (msg)=>{
         console.log(`Dji tello: ${msg.toString()}`);
     })
+    onLand: async () => {await cmder.sendLand()},
     socket.on('error', (err)=>{
         console.log(`Dji tello ERROR: ${err}`);
     })
