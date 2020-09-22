@@ -33,6 +33,19 @@ app.get('/getcookie',(req, res)=>{
 app.use('/admin', adminRoutes)
 app.use('/usuarios', usuarioRoutes)
 
+app.get('*',(req, res, next)=>{
+    setImmediate(()=>{
+        next(new Error('Temos um problema'));
+    })
+})
+
+
+app.use((err, req, res, next)=>{
+    console.log('Geramos um erro, veja as instruções para corrigir!');
+    res.status(500).json({message: err.message});
+})
+
+
 app.listen(3000, ()=>{
     console.log(`Server running: http://localhost:3000`);
 })
