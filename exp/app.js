@@ -4,8 +4,15 @@ const adminRoutes = require ('./routes/admin');
 const usuarioRoutes = require ('./routes/usuarios');
 const cookieParser = require('cookie-parser');
 
+
+app.use('/static',express.static('public'));
+
+
+
+
 app.use(express.json());
 app.use(cookieParser());
+
 app.use((req, res, next)=>{
     console.log('Executando Middleware em nível de aplicação');
     return next();
