@@ -29,9 +29,10 @@ app.post('/upload', upload.single('arquivo'),(req, res, next)=>{
         err.httpStatusCode = 400;
         return next(err);
     }
-    res.send(file);
-    //res.end('Upload realizado com sucesso!');
-
+    //res.send(file);
+    res.end('Upload realizado com sucesso!');
+    //app.post('/');
+   
 })
 
 app.listen(3000, '127.0.0.1',()=>{
