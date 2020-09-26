@@ -5,8 +5,18 @@ POST http://localhost:3000/subscribers
 Content-Type: application/json
 
 {
-    "userName": "Fabricia Bela",
+    "userName": "Fabricia Pires Bela3",
     "userChanel": "hcodebrasil"
 }
 ###
-GET http://localhost:3000/subscribers/5f6bc8578b55dc98e52077f6
+GET http://localhost:3000/subscribers/5f6fbd243058e339d7eb4ac0
+###
+DELETE http://localhost:3000/subscribers/5f6fbd243058e339d7eb4ac0
+###
+PATCH http://localhost:3000/subscribers/5f6bc0e6cc465a85bbb6a3f2
+Content-Type: application/json
+
+{
+    "userName": "Fabricia P. Bela"
+}
+

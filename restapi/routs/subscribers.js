@@ -1,14 +1,15 @@
 const express = require('express');
-const subscriber = require('../models/subscriber');
 const router = express.Router();
-const Subscriber = require('../models/subscriber')
+const Subscriber = require('../models/subscriber');
+
+
 
 router.get('/', async (req, res)=>{
    try {
        const subscribers = await Subscriber.find();
-       res.json(subscribers)
+       res.json(subscribers);
    } catch (error) {
-       res.status(500).json({message: error.message})
+       res.status(500).json({message: error.message});
    }
 })
 
@@ -21,19 +22,39 @@ router.post('/', async (req, res)=>{
         userName: req.body.userName,
         userChannel: req.body.userChannel
     })
-    5f6bc8578b55dc98e52077f6
-        } catch (error) {
+        try{
+            const newSubscriber = await subscriber.save();
+            req.status(201).json(newSubscriber);
+    
+    } catch (error) {
             res.status(400).json({message: error.message});
         
     }
 })
-
-router.patch('/:id', getSubscriber, (req, res)=>{
-
+// ALTERAR PEDAÇO DE INFORMAÇÃO O ----- PUT ALTERA TODA INFORMAÇÃO
+router.patch('/:id', getSubscriber, async (req, res)=>{ 
+    if(req.body.userName != null){
+        res.subscriber.userName = req.body.userName;
+    }
+    if(req.body.userChannel != null){
+        res.subscriber.userChannel = req.body.userChannel;
+    }
+    try {
+        const updateSubscriber = await res.subscriber.save();
+        res.json(updateSubscriber);
+    } catch (error) {
+        res.status(400).json({message: error.message});
+        
+    }
 })
 
-router.delete('/:id',  getSubscriber, (req, res)=>{
-
+router.delete('/:id',  getSubscriber, async (req, res)=>{
+    try {
+        await res.subscriber.remove();
+        res.json({message: 'Suscriber was delete'});
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
 })
 
 async function getSubscriber(req, res, next){
@@ -43,7 +64,7 @@ async function getSubscriber(req, res, next){
            return res.status(404).json({message: 'Subscriber not found!'})
        }
     } catch (error) {
-        return res.status(500).json({message: 'Algo deu errado!'});
+        return res.status(500).json({message: error.message});
     }
 
     res.subscriber = subscriber;
